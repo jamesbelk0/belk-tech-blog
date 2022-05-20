@@ -9,7 +9,11 @@ router.get('/', (req, res) => {
         where: {
             user_id: req.session.user_id
         },
-        attributes: ['id', 'post_comment', 'title', 'created_at'],
+        attributes: [
+            'id',
+            'post_comment',
+            'title',
+            'created_at'],
         include: [
             {
                 model: Comment,
@@ -40,7 +44,12 @@ router.get('/edit/:id', (req, res) => {
         where: {
             id: req.params.id
         },
-        attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
+        attributes: [
+            'id',
+            'comment_text',
+            'post_id',
+            'user_id',
+            'created_at'],
         include: [
             {
                 model: User,
@@ -52,14 +61,14 @@ router.get('/edit/:id', (req, res) => {
             }
         ]
     })
-    .then(dbPostData => {
-        const post = dbPostData.get({ plain: true });
-        res.render('edit-post', { post, loggedIn: req.session.loggedIn });
-    })
-    .catch(err => {
-        console.log(err);
-        res.status(500).json(err);
-    });
+        .then(dbPostData => {
+            const post = dbPostData.get({ plain: true });
+            res.render('edit-post', { post, loggedIn: req.session.loggedIn });
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json(err);
+        });
 });
 
 module.exports = router
